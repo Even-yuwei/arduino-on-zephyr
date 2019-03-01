@@ -49,6 +49,16 @@ execute_process(
   RESULT_VARIABLE retcode
 )
 
+make_minimum_required(VERSION 3.0.2)
+
+file(GLOB_RECURSE sc_links ${preprod_dir}/zephyr/misc/generatec/syscalls_links/*)
+
+foreach(l ${sc_links})
+  if(IS_SYMLINK ${l})
+    file(REMOVE ${l})
+  endif()
+endforeach()
+
 if(${retcode})
   message(FATAL_ERROR)
 endif()

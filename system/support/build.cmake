@@ -23,11 +23,20 @@ else()
   )
 endif()
 
-  execute_process(
-    COMMAND ${CMAKE_COMMAND} --build ${build_dir} --
-    WORKING_DIRECTORY ${build_dir}
-    RESULT_VARIABLE retcode
-  )
+execute_process(
+  COMMAND ${CMAKE_COMMAND} --build ${build_dir} --
+  WORKING_DIRECTORY ${build_dir}
+  RESULT_VARIABLE retcode
+)
+
+file(GLOB_RECURSE sc_links ${build?dir}/zephyr/misc/generatec/syscalls_links/*)
+
+foreach(l ${sc_links})
+  if(IS_SYMLINK ${l})
+    file(REMOVE ${l})
+  endif()
+endforeach()
+
 
 if(${retcode})
   message(FATAL_ERROR)
