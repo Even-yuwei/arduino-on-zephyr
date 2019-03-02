@@ -3,9 +3,6 @@ cmake_minimum_required(VERSION 3.0.2)
 set(preproc_dir ${ARDUINO_BUILD_PATH}/preproc)
 set(conffiles ${ARDUINO_VARIANT_PATH}/variant.conf)
 
-file(GLOB conf_files ${ARDUINO_VARIANT_PATH}/*.conf)
-file(COPY ${conf_files} DESTINATION ${preproc_dir}/_cmakefile )
-
 if(NOT EXISTS ${preproc_dir}/_cmakefile/prj.conf)
   file(TOUCH ${preproc_dir}/_cmakefile/prj.conf)
 endif()
