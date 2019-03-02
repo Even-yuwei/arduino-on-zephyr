@@ -29,7 +29,7 @@ execute_process(
   RESULT_VARIABLE retcode
 )
 
-file(GLOB_RECURSE sc_links ${build?dir}/zephyr/misc/generatec/syscalls_links/*)
+file(GLOB_RECURSE sc_links ${build_dir}/zephyr/misc/generated/syscalls_links/*)
 
 foreach(l ${sc_links})
   if(IS_SYMLINK ${l})

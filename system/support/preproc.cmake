@@ -51,7 +51,7 @@ execute_process(
 
 make_minimum_required(VERSION 3.0.2)
 
-file(GLOB_RECURSE sc_links ${preprod_dir}/zephyr/misc/generatec/syscalls_links/*)
+file(GLOB_RECURSE sc_links ${preprod_dir}/zephyr/misc/generated/syscalls_links/*)
 
 foreach(l ${sc_links})
   if(IS_SYMLINK ${l})
