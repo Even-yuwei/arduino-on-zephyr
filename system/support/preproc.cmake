@@ -5,6 +5,19 @@ set(preproc_dir ${ARDUINO_BUILD_PATH}/preproc)
 file(GLOB conf_files ${ARDUINO_VARIANT_PATH}/*.conf)
 file(COPY ${conf_files} DESTINATION ${ARDUINO_BUILD_PATH}/preproc/_cmakefile )
 
+get_cmake_property(_variableNames VARIABLES)
+set(overlay_confs prj.conf)
+foreach(varname ${_variableNames})
+  string(FIND ${varname} OVERLAY_APPEND_ match)
+  if(${match} EQUAL 0)
+    #message(STATUS "${varname}=${${varname}}")
+    list(APPEND overlay_confs ${${varname}})
+  endif()
+endforeach()
+string(JOIN " " overlay_opt ${overlay_confs})
+#message(STATUS "-DCONF_FILE="${overlay_opt})
+
+
 if(EXISTS ${preproc_dir}/zephyr/ )
   execute_process(
     COMMAND  python3   $ENV{ZEPHYR_BASE}/scripts/subfolder_list.py
@@ -19,8 +32,9 @@ if(EXISTS ${ARDUINO_BUILD_PATH}/preproc/_cmakefile/.NOT_CHANGED )
   file(REMOVE ${ARDUINO_BUILD_PATH}/preproc/_cmakefile/.NOT_CHANGED )
 else()
   if(NOT EXISTS ${ARDUINO_BUILD_PATH}/preproc/preproc.sh )
+    message(${overlay_confs})
     execute_process(
-      COMMAND ${CMAKE_COMMAND} -GNinja -DBOARD=${BOARD} _cmakefile
+      COMMAND ${CMAKE_COMMAND} -GNinja -DBOARD=${BOARD} -DCONF_FILE=${overlay_opts} _cmakefile
       WORKING_DIRECTORY ${preproc_dir}
       OUTPUT_QUIET
       ERROR_QUIET
