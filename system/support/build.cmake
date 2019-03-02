@@ -1,21 +1,22 @@
 cmake_minimum_required(VERSION 3.0.2)
 
 set(build_dir ${ARDUINO_BUILD_PATH})
+set(conffiles ${ARDUINO_VARIANT_PATH}/variant.conf)
 
-file(GLOB conf_files ${ARDUINO_VARIANT_PATH}/*.conf)
-file(COPY ${conf_files} DESTINATION ${ARDUINO_BUILD_PATH}/_cmakefile )
+if(NOT EXISTS ${build_dir}/_cmakefile/prj.conf)
+  file(TOUCH ${build_dir}/_cmakefile/prj.conf)
+endif()
 
 get_cmake_property(_variableNames VARIABLES)
-set(overlay_confs prj.conf)
 foreach(varname ${_variableNames})
   string(FIND ${varname} OVERLAY_APPEND_ match)
   if(${match} EQUAL 0)
     #message(STATUS "${varname}=${${varname}}")
-    list(APPEND overlay_confs ${${varname}})
+    list(APPEND conffiles ${${varname}})
   endif()
 endforeach()
-string(JOIN " " overlay_opt ${overlay_confs})
-#message(STATUS "-DCONF_FILE="${overlay_opt})
+string(JOIN " " conffile_opt ${conffiles})
+#message(STATUS "-DCONF_FILE="${conffile_opt})
 
 
 if(EXISTS ${build_dir}/zephyr/ )
@@ -32,7 +33,7 @@ if(EXISTS ${ARDUINO_BUILD_PATH}/_cmakefile/.NOT_CHANGED )
   file(REMOVE ${ARDUINO_BUILD_PATH}/_cmakefile/.NOT_CHANGED )
 else()
   execute_process(
-    COMMAND ${CMAKE_COMMAND} -GNinja -DBOARD=${BOARD} -DCONF_FILE=${overlay_opt} _cmakefile
+    COMMAND ${CMAKE_COMMAND} -GNinja -DBOARD=${BOARD} -DCONF_FILE=${conffile_opt} _cmakefile
     WORKING_DIRECTORY ${build_dir}
   )
 endif()
