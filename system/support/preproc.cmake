@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.0.2)
 
 set(preproc_dir ${ARDUINO_BUILD_PATH}/preproc)
 
-file(COPY ${ARDUINO_VARIANT_PATH}/prj.conf DESTINATION ${ARDUINO_BUILD_PATH}/preproc/_cmakefile )
+file(GLOB conf_files ${ARDUINO_VARIANT_PATH}/*.conf)
+file(COPY ${conf_files} DESTINATION ${ARDUINO_BUILD_PATH}/preproc/_cmakefile )
 
 if(EXISTS ${preproc_dir}/zephyr/ )
   execute_process(
