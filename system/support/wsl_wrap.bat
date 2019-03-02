@@ -1,2 +1,3 @@
 @echo off
-C:\Windows\Sysnative\wsl.exe -d Debian cmake %*
+set PATH=C:\Windows\Sysnative;%PATH%
+wsl.exe -d Debian cmake %*
