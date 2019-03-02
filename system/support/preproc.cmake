@@ -66,8 +66,6 @@ execute_process(
   RESULT_VARIABLE retcode
 )
 
-make_minimum_required(VERSION 3.0.2)
-
 file(GLOB_RECURSE sc_links ${preprod_dir}/zephyr/misc/generated/syscalls_links/*)
 
 foreach(l ${sc_links})
