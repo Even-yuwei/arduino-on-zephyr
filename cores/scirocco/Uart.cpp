@@ -19,9 +19,8 @@
 #include <zephyr.h>
 #include <uart.h>
 #include "Uart.h"
-#include "Arduino.h"
-#include "wiring_private.h"
 
+#define max(a,b) ((a)>(b)?(a):(b))
 
 Uart::Uart(struct device *_s)
 {
