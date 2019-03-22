@@ -2,12 +2,12 @@
   {
     "path": "system/.west/west",
     "url": "https://github.com/zephyrproject-rtos/west",
-    "revision": "ab560b5c64551cadffe191eecd79ff979cec3c8d"
+    "revision": "d5f8caf2c95c6b79aa87395253be760d63112a60"
   },
   {
     "path": "system/zephyr",
     "url": "https://github.com/zephyrproject-rtos/zephyr",
-    "revision": "588d7b068c9166f043ccb0f9bf50bf39d0173cee"
+    "revision": "350f6f715632747ccd087d80ffb5bb586428d1de"
   }
 ]
 
